@@ -101,7 +101,7 @@ else {
 
 
   if((inpt = fopen(argv[1],"rb")) == NULL) {
-	printf("\007Error opening input file!\n"); return;
+	printf("\007Error opening input file!\n"); return 0;
   } 
 /*  if((shfp = fopen(argv[2],"rt")) == NULL) {
 	printf("\007Error opening shift file!\n"); return;
@@ -194,7 +194,7 @@ else {
 	given time instant  ***/
 
   if((fp = fopen(argv[2],"a")) == NULL) {
-	printf("\007Error opening MAR coeff file!\n"); return;
+	printf("\007Error opening MAR coeff file!\n"); return 0;
   } 
    for ( i=0; i < MODORDER+1; i++) /* 5 order, 1st is identity; if 7, then new =0 */
 	 for ( j=0; j < NCHN*NCHN; j++)
@@ -203,7 +203,7 @@ else {
    fclose(fp);
    
   if((fp = fopen(argv[3],"a")) == NULL) {
-	printf("\007Error opening MAR noise file!\n"); return;
+	printf("\007Error opening MAR noise file!\n"); return 0;
   } 
    for ( i=0; i < NCHN*NCHN; i++)
 	 fprintf(fp,"%.3g  ",Ve[i]);
@@ -239,10 +239,3 @@ else {
 
    
 }
-
-
-
-
-
-
-
