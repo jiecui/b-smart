@@ -13,11 +13,12 @@ determinant of residual noise.
 
 */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "EEGmat.h"
 #include "EEGdef.h"
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
+#include "MARdef.h"
 
 /* 
    void MARfit(double *x[],int m,int n[],int k,int Order,

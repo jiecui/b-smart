@@ -1,8 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "EEGmat.h"
 #include "EEGdef.h"
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
 
 /* 
    void MARgetpfpb(double *x[],int m,int n[],int k,int order,

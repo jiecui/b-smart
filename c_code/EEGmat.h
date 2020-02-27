@@ -52,4 +52,8 @@ Complex Conj(Complex);
 void CmatmCmat(Complex *A,Complex *B,Complex *C,int m);
 void ConjCmat(Complex *A,Complex *B,int m);
 void Carrayp(Complex *A, Complex *B, Complex *C, int m);
+
+// EEGreaA.c
+void EEGrealA(double *tildA, double **realA, double *Ve, int m, int order);
+
 #endif

@@ -3,8 +3,9 @@
 #include <math.h>
 #include "EEGdef.h"
 #include "EEGmat.h"
+#include "MARdef.h"
 
-main(int argc, char**argv)
+int main(int argc, char**argv)
 { 
   int NPTS =0;
   int NCHN =0;
@@ -235,7 +236,4 @@ else {
   free(x);
 
   exit(0);
-
-
-   
 }

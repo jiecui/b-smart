@@ -44,6 +44,7 @@ double mean2, double ss2, int npoints, int nlags, double *corfun)
       cov = getcov(sigarray2,sigarray1,mean2,mean1,npoints,lag);
       corfun[lag+nlags-1] = cov / sqrt(ss1 * ss2);
     }
+  return cov; // RJC
 }
 
 double getmean(double *array, int npoints)

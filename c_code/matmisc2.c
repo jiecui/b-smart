@@ -1,9 +1,13 @@
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include "EEGmat.h"
+
 #define TINY 1.0e-20;
+
 double *init_vec();
 double *init_mat();
-#include<stdio.h>
+
 void EEGerror(char *s)
 {
   fprintf(stderr,"%s\n",s);

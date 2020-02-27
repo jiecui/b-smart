@@ -1,4 +1,5 @@
-#include<math.h> 
+#include <math.h> 
+
 void MARgetaic(double tildA[],int nchns,int Order,int sampleno,
 		     double aic[])
 {
@@ -14,6 +15,3 @@ void MARgetaic(double tildA[],int nchns,int Order,int sampleno,
   }
   return;
 }
-
-
-

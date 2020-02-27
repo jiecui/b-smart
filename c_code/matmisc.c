@@ -1,6 +1,6 @@
 /* matrix calculation subroutine */
 
-#include<stdlib.h>
+#include <stdlib.h>
 void EEGerror();
 
 /* 1. initial vector */
