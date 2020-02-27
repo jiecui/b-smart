@@ -1,5 +1,7 @@
-B-SMART
-=======
+B-SMART (Ver 0.7)
+=================
+
+_Caution: this version is underdevelopment, which may not be stable_
 
 Brian-System for Multivariate AutoRegressive Time series (B-SMART)
 
