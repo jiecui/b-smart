@@ -25,7 +25,7 @@ function varargout = bsmart(varargin)
 % Last Modified by GUIDE v2.5 16-Sep-2007 20:35:28
 
 % Copyright (c) 2006-2020 Richard J. Cui. Created: 14-Sep-2007 11:11:11
-% $Revision: 0.3$ $Date: Thu 02/27/2020 10:33:59.598 AM $
+% $Revision: 0.4$ $Date: Thu 02/27/2020  1:58:24.179 PM $
 %
 % 1026 Rocky Creek Dr NE
 % Rochester, MN 55906, USA
@@ -443,7 +443,7 @@ function about_bsmart_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-msgstr = sprintf('BSMART ver 0.5 build 102\n2006 - 2007 BSMART Goup\n(Under construction)');
+msgstr = sprintf('B-SMART ver 0.7\n2006 - 2020 Richard Cui\nB-SMART Group\n(Under construction)');
 msgbox(msgstr,'About BSMART','help');
 
 % --------------------------------------------------------------------

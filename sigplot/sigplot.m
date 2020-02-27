@@ -165,9 +165,13 @@ function [outvar1] = sigplot(data, varargin)
 % along with this program; if not, write to the Free Software
 % Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-%   Copyright 2006-2007 bsmart group, Richard J. Cui.
-%   $Revision: 0.1 $  $Date: 11-Jul-2007 16:25:19 $
-%   SHIS UT-Houston, Houston, TX 77030, USA.
+%   Copyright 2006-2020 bsmart group, Richard J. Cui.
+%   $Revision: 0.2 $  $Date: Thu 02/27/2020  2:22:00.852 PM $
+%
+% 1026 Rocky Creek Dr NE
+% Rochester, MN 55906, USA
+%
+% Email: richard.cui@utoronto.ca
 
 % Note for programmers - Internal variable structure:
 % All in g. except for Eposition and Eg.spacingwhich are inside the boxes
@@ -709,7 +713,7 @@ if ~ischar(data)
             'string', 'Event types', 'callback', 'sigplot(''drawlegend'', gcbf)');
     end;
 
-    set(u,'Units','Normalized')
+    % set(u,'Units','Normalized')
 
     % %%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Set up uimenus
