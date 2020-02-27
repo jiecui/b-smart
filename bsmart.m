@@ -1,15 +1,15 @@
 function varargout = bsmart(varargin)
-% MAR M-file for mar.fig
-%      MAR, by itself, creates a new MAR or raises the existing
+% BSMART M-file for bsmart.fig
+%      BSMART, by itself, creates a new BSMART or raises the existing
 %      singleton*.
 %
-%      H = MAR returns the handle to a new MAR or the handle to
+%      H = BSMART returns the handle to a new BSMART or the handle to
 %      the existing singleton*.
 %
-%      MAR('CALLBACK',hObject,eventData,handles,...) calls the local
+%      BSMART('CALLBACK',hObject,eventData,handles,...) calls the local
 %      function named CALLBACK in MAR.M with the given input arguments.
 %
-%      MAR('Property','Value',...) creates a new MAR or raises the
+%      BSMART('Property','Value',...) creates a new BSMART or raises the
 %      existing singleton*.  Starting from the left, property value pairs are
 %      applied to the GUI before mar_OpeningFunction gets called.  An
 %      unrecognized property name or invalid value makes property application
@@ -21,17 +21,17 @@ function varargout = bsmart(varargin)
 % See also: GUIDE, GUIDATA, GUIHANDLES
 
 % Copyright 2002-2003 The MathWorks, Inc.
-
-% Copyright (c) 2006-2007 BSMART Group
-% by Richard Cui
-% $Revision: 0.2$ $Date: 14-Sep-2007 11:11:11$
-% SHIS UT-Houston, Houston, TX 77030, USA.
-%
-% Lei Xu, Hualou Liang
-
 % Edit the above text to modify the response to help mar
-
 % Last Modified by GUIDE v2.5 16-Sep-2007 20:35:28
+
+% Copyright (c) 2006-2020 Richard J. Cui. Created: 14-Sep-2007 11:11:11
+% $Revision: 0.3$ $Date: Thu 02/27/2020 10:33:59.598 AM $
+%
+% 1026 Rocky Creek Dr NE
+% Rochester, MN 55906, USA
+%
+% Email: richard.cui@utoronto.ca
+
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
