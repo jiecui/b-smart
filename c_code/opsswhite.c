@@ -3,6 +3,7 @@
 #include <math.h>
 #include "EEGdef.h"
 #include "EEGmat.h"
+#include "MARdef.h"
 
 /*****
    Write residuals probabilities to RESID.OUT(ascii file) 
@@ -16,7 +17,7 @@ Change model order defined in EEGdef.h, 02/17/99
 ********/
 
 
-main(int argc, char**argv)
+int main(int argc, char**argv)
 { 
   int NPTS =0;
   int NCHN =0;
@@ -135,7 +136,7 @@ main(int argc, char**argv)
 
 
   if((inpt = fopen(argv[1],"rb")) == NULL) {
-	printf("\007Error opening input file!\n"); return;
+	printf("\007Error opening input file!\n"); return 0;
   } 
 /*  if((shfp = fopen(argv[2],"rt")) == NULL) {
 	printf("\007Error opening shift file!\n"); return;
@@ -214,7 +215,7 @@ main(int argc, char**argv)
   /* First loop over trials, and then loop over channels & allocate memory for 
 	 xtemp & rtemp at proper locations in x & rout */
   if((fr = fopen("resid.out","a")) == NULL) {
-	printf("\007Error opening MAR coeff file!\n"); return;
+	printf("\007Error opening MAR coeff file!\n"); return 0;
   } 
   for(j=0;j<NTRLS;j++){
 	for(k=0;k<NCHN;k++){
@@ -255,7 +256,7 @@ main(int argc, char**argv)
 	  given time instant  ***/
 
 	if((fp = fopen(argv[2],"a")) == NULL) {
-	  printf("\007Error opening MAR coeff file!\n"); return;
+	  printf("\007Error opening MAR coeff file!\n"); return 0;
 	} 
 	/*   for ( i=0; i < 6; i++) *//* 5 order, 1st is identity; if 7, then new =0 */
    for ( i=0; i < MODORDER+1; i++) /* 5 order, 1st is identity; if 7, then new =0 */
@@ -265,7 +266,7 @@ main(int argc, char**argv)
    fclose(fp);
    
   if((fp = fopen(argv[3],"a")) == NULL) {
-	printf("\007Error opening MAR noise file!\n"); return;
+	printf("\007Error opening MAR noise file!\n"); return 0;
   } 
    for ( i=0; i < NCHN*NCHN; i++)
 	 fprintf(fp,"%.3g  ",Ve[i]);

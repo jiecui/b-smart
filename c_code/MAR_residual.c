@@ -1,4 +1,6 @@
+#include <stdlib.h>
 #include "EEGmat.h"
+
 void MAR_residual(double **xin, double **rout, double **A,
 	     int nchns, int order, int xinlength)
 {
@@ -23,5 +25,3 @@ void MAR_residual(double **xin, double **rout, double **A,
   free(y2);
   return;
 }
-      
-      

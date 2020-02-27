@@ -173,5 +173,3 @@ void MARfit(double *x[],int m,int n[],int k,int Order,
   return;
   
 }
-
-
