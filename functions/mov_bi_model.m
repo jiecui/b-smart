@@ -14,18 +14,26 @@ function mov_bi_model(dat,order,startp,endp,window)
 % Output(s):
 %   in the bsmartroot/Movingwindow_Coefficient directory
 
-% Copyright (c) 2006-2007 BSMART Group
+% Copyright (c) 2006-2020 BSMART Group
 % by Richard Cui
-% $Revision: 0.2$ $Date: 12-Sep-2007 09:51:48$
+% $Revision: 0.3$ $Date: Thu 02/27/2020  8:15:18.339 PM$
 % SHIS UT-Houston, Houston, TX 77030, USA.
 % 
-% Lei Xu, Hualou Liang
+%
+% 1026 Rocky Creek Dr NE
+% Rochester, MN 55906, USA
+%
+% Email: richard.cui@utoronto.ca
 
 % parse directory
 cdir = pwd;                 % find current directory
 p = mfilename('fullpath');
 fdir = fileparts(p);        % find function directory
 cd(fdir);                   % change current dir to function dir
+
+cd('..')
+mv_dir = pwd; % get the dir of 'Movingwindow_Coefficient' folder
+cd(fdir);
 
 % processing
 
@@ -47,25 +55,33 @@ save points points -ascii;
 save window window -ascii;
 save order order -ascii;
 
-PathName=fullfile(pwd,'Movingwindow_Coefficient');
+PathName=fullfile(mv_dir, 'Movingwindow_Coefficient');
 % str=['!DEL /Q ' PathName '\*'];
 % eval(str);
 coefile = [PathName,'\*'];
 delete(coefile);            % delete all coefficients files in the directory
 
 dat=dat(startp:endp,:,:);
+opssmov_fun = fullfile(fdir, 'opssmov');
+opssmov_com = sprintf('%s dataset.bin A Ve', opssmov_fun);
+fw = waitbar(0, 'Creating model...');
 for i=1:(channel2-1)
+    waitbar(i/(channel2-1), fw)
     for j=(i+1):channel2
         dat1=dat(:,i,:);
         dat2=dat(:,j,:);
         dat3=cat(2,dat1,dat2);
         writedat('dataset.bin',dat3);
-        % TODO: don't return '0', use 'waitebar'
-        if ispc
-            eval(['unix ' '(''' 'opssmov ' 'dataset.bin ' ' A ' 'Ve' ''')']);
-        else
-            eval(['unix ' '(''' './opssmov ' 'dataset.bin ' ' A ' 'Ve' ''')']);
-        end%if
+        % if ispc
+        %     eval(['unix ' '(''' 'opssmov ' 'dataset.bin ' ' A ' 'Ve' ''')']);
+        % else
+        %     eval(['unix ' '(''' './opssmov ' 'dataset.bin ' ' A ' 'Ve' ''')']);
+        % end%if
+        status = unix(opssmov_com);
+        if status ~= 0
+            error('Cannot compute with ''opssmov''!')
+        end % if
+        
         ii=num2str(i);jj=num2str(j);
         FileName=['AR_C_' ii 'and' jj];
         fA=fullfile(PathName,FileName);
@@ -80,6 +96,8 @@ for i=1:(channel2-1)
         delete dataset.bin
     end
 end
+delete(fw)
+
 % !DEL channel
 % !DEL trail
 % !DEL points

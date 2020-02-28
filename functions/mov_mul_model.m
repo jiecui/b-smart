@@ -16,8 +16,12 @@ function [A,Ve] = mov_mul_model(dat,order,startp,endp,window)
 
 % Copyright (c) 2006-2007 BSMART group.
 % by Richard Cui
-% $Revision: 0.3$ $Date: 18-Sep-2007 15:43:37$
-% SHIS UT-Houston, Houston, TX 77030, USA.
+% $Revision: 0.3$ $Date: Thu 02/27/2020  8:15:18.339 PM$
+%
+% 1026 Rocky Creek Dr NE
+% Rochester, MN 55906, USA
+%
+% Email: richard.cui@utoronto.ca
 
 % parse directory
 cdir = pwd;                 % find current directory
@@ -49,13 +53,21 @@ save order order -ascii;
 dat=dat(start:endp,:,:);
 writedat('dataset.bin',dat);
 
-if ispc
-    eval(['unix ' '(''' 'opssmov ' 'dataset.bin ' ' A ' 'Ve' ''')']);
-else
-    eval(['unix ' '(''' './opssmov ' 'dataset.bin ' ' A ' 'Ve' ''')']);
-end%if
+opssmov_fun = fullfile(fdir, 'opssmov');
+opssmov_com = sprintf('%s dataset.bin A Ve', opssmov_fun);
+
+% if ispc
+%     eval(['unix ' '(''' 'opssmov ' 'dataset.bin ' ' A ' 'Ve' ''')']);
+% else
+%     eval(['unix ' '(''' './opssmov ' 'dataset.bin ' ' A ' 'Ve' ''')']);
+% end%if
+status = unix(opssmov_com);
+if status ~= 0
+    error('Cannot comput with ''opssmov!''')
+end % if
 A=load('A');
 Ve=load('Ve');
+
 delete A
 delete Ve
 delete channel

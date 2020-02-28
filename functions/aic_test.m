@@ -34,14 +34,14 @@ save order maxorder -ascii;
 writedat('dataset.bin',dat);
 
 % TODO: implement with MEX utility
-opssfull_fun = fullfile(fdir, 'opssaic');
-opssfull_com = sprintf('%s dataset.bin A Ve AIC_now', opssfull_fun);
+opssaic_fun = fullfile(fdir, 'opssaic');
+opssaic_com = sprintf('%s dataset.bin A Ve AIC_now', opssaic_fun);
 % if ispc
 %     status = eval(['unix' '(''' 'opssaic ' 'dataset.bin ' ' A ' 'Ve ' 'AIC_now' ''')']);
 % else
 %     status = eval(['unix' '(''' './opssaic ' 'dataset.bin ' ' A ' 'Ve ' 'AIC_now' ''')']);
 % end%if
-status = unix(opssfull_com);
+status = unix(opssaic_com);
 
 % clean job one
 delete channel
