@@ -20,15 +20,13 @@ function [A,Ve] = one_mul_model(dat,order,startp,window)
 %   Neural Networks, 21(8), 1094-1104. doi: DOI 10.1016/j.neunet.2008.05.007
 
 
-% Copyright 2007-2015 Richard J. Cui. Created: 11-Sep-2007 22:58:31
-% $Revision: 0.2 $  $Date: Tue 02/10/2015  8:50:06.470 AM $
+% Copyright 2007-2020 Richard J. Cui. Created: 11-Sep-2007 22:58:31
+% $Revision: 0.3 $  $Date: Thu 02/27/2020  7:37:53.649 PM $
 %
-% Sensorimotor Research Group
-% School of Biological and Health System Engineering
-% Arizona State University
-% Tempe, AZ 25287, USA
+% 1026 Rocky Creek Dr NE
+% Rochester, MN 55906, USA
 %
-% Email: richard.jie.cui@gmail.com
+% Email: richard.cui@utoronto.ca
 
 % parse directory
 cdir = pwd;                 % find current directory
@@ -44,17 +42,22 @@ save trail trail -ascii;
 save points window -ascii;
 save order order -ascii;
 
+opssfull_fun = fullfile(fdir, 'opssfull');
+opssfull_com = sprintf('%s dataset.bin A Ve AIC', opssfull_fun);
+
 start = startp;
 dat = dat(start:start+window-1,:,:);
 writedat('dataset.bin',dat);
 
-if ispc
-    eval(['unix ' '(''' 'opssfull ' 'dataset.bin ' ' A ' 'Ve ' 'AIC' ''')'])
-elseif ismac
-    unix ('./opssfull dataset.bin  A Ve AIC');
-else
-    eval(['unix ' '(''' './opssfull ' 'dataset.bin ' ' A ' 'Ve ' 'AIC' ''')']);
-end%if
+% if ispc
+%     eval(['unix ' '(''' 'opssfull ' 'dataset.bin ' ' A ' 'Ve ' 'AIC' ''')'])
+% elseif ismac
+%     unix ('./opssfull dataset.bin  A Ve AIC');
+% else
+%     eval(['unix ' '(''' './opssfull ' 'dataset.bin ' ' A ' 'Ve ' 'AIC' ''')']);
+% end%if
+unix(opssfull_com);
+
 A = load('A');
 Ve = load('Ve');
 

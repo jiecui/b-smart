@@ -52,6 +52,8 @@ PathName=fullfile(oc_dir,'Onewindow_Coefficient');
 coefile = [PathName,'\*'];
 delete(coefile);            % delete all coefficients files in the directory
 
+opssfull_fun = fullfile(fdir, 'opssfull');
+opssfull_com = sprintf('%s dataset.bin A Ve AIC', opssfull_fun);
 fw = waitbar(0, 'Creating model...');
 for i=1:(channel2-1)
     waitbar(i/(channel2-1), fw)
@@ -60,12 +62,12 @@ for i=1:(channel2-1)
         dat2=dat(:,j,:);
         dat3=cat(2,dat1,dat2);
         writedat('dataset.bin',dat3);
-        % TODO: don't return '0', use 'waitebar'
-        if ispc
-            eval(['unix ' '(''' 'opssfull ' 'dataset.bin ' ' A ' 'Ve ' 'AIC' ''');'])
-        else
-            eval(['unix ' '(''' './opssfull ' 'dataset.bin ' ' A ' 'Ve ' 'AIC' ''');']);
-        end%if
+        % if ispc
+        %     eval(['unix ' '(''' 'opssfull ' 'dataset.bin ' ' A ' 'Ve ' 'AIC' ''');'])
+        % else
+        %     eval(['unix ' '(''' './opssfull ' 'dataset.bin ' ' A ' 'Ve ' 'AIC' ''');']);
+        % end%if
+        unix(opssfull_com);
         % save and move files
         ii=num2str(i);jj=num2str(j);
         FileName=['AR_C_' ii 'and' jj];

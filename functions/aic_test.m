@@ -9,10 +9,14 @@ function AIC = aic_test(dat,winlen,maxorder)
 % Example:
 %   [AIC] = aic_test(data,10,8)
 
-% Copyright (c) 2006-2007 BSMART group.
+% Copyright (c) 2006-2020 BSMART group.
 % by Richard Cui
-% $Revision: 0.3$ $Date: 18-Sep-2007 15:41:17$
-% SHIS UT-Houston, Houston, TX 77030, USA.
+% $Revision: 0.4$ $Date: Thu 02/27/2020  7:37:53.649 PM$
+%
+% 1026 Rocky Creek Dr NE
+% Rochester, MN 55906, USA
+%
+% Email: richard.cui@utoronto.ca
 
 % parse directory
 cdir = pwd;                 % find current directory
@@ -21,7 +25,7 @@ fdir = fileparts(p);        % find function directory
 cd(fdir);                   % change current dir to function dir
 
 % save opssaic input arguments
-[pts chan trl] = size(dat);
+[pts, chan, trl] = size(dat);
 save channel chan -ascii;
 save trail trl -ascii;
 save points pts -ascii;
@@ -30,11 +34,15 @@ save order maxorder -ascii;
 writedat('dataset.bin',dat);
 
 % TODO: implement with MEX utility
-if ispc
-    status = eval(['unix' '(''' 'opssaic ' 'dataset.bin ' ' A ' 'Ve ' 'AIC_now' ''')']);
-else
-    status = eval(['unix' '(''' './opssaic ' 'dataset.bin ' ' A ' 'Ve ' 'AIC_now' ''')']);
-end%if
+opssfull_fun = fullfile(fdir, 'opssaic');
+opssfull_com = sprintf('%s dataset.bin A Ve AIC_now', opssfull_fun);
+% if ispc
+%     status = eval(['unix' '(''' 'opssaic ' 'dataset.bin ' ' A ' 'Ve ' 'AIC_now' ''')']);
+% else
+%     status = eval(['unix' '(''' './opssaic ' 'dataset.bin ' ' A ' 'Ve ' 'AIC_now' ''')']);
+% end%if
+status = unix(opssfull_com);
+
 % clean job one
 delete channel
 delete trail
