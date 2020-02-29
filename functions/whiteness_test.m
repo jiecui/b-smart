@@ -12,10 +12,12 @@ function [resid] = whiteness_test(dat,window,order)
 
 % Copyright (c) 2006-2007 BSMART group.
 % by Richard Cui
-% $Revision: 0.1$ $Date: 11-Sep-2007 22:43:55$
-% SHIS UT-Houston, Houston, TX 77030, USA.
-% 
-% Lei Xu, Hualou Liang
+% $Revision: 0.3$ $Date: Sat 02/29/2020  9:38:41.372 AM $
+%
+% 1026 Rocky Creek Dr NE
+% Rochester, MN 55906, USA
+%
+% Email: richard.cui@utoronto.ca
 
 % parse directory
 cdir = pwd;                 % find current directory
@@ -23,7 +25,7 @@ p = mfilename('fullpath');
 fdir = fileparts(p);        % find function directory
 cd(fdir);                   % change current dir to function dir
 
-[points channel trail] = size(dat);
+[points, channel, trail] = size(dat);
 save channel channel -ascii;
 save trail trail -ascii;
 save points points -ascii;
@@ -31,12 +33,15 @@ save window window -ascii;
 save order order -ascii;
 
 writedat('dataset.bin',dat);
-%!make -f Makefile.whiteness
-if ispc
-    status = eval(['unix ' '(''' 'opsswhite ' 'dataset.bin ' ' A ' 'Ve' ''')']);
-else
-    status = eval(['unix ' '(''' './opsswhite ' 'dataset.bin ' ' A ' 'Ve' ''')']);
-end%if
+opsswhite_fun = fullfile(fdir, 'opsswhite');
+opsswhite_com = sprintf('%s dataset.bin A Ve', opsswhite_fun);
+% if ispc
+%     status = eval(['unix ' '(''' 'opsswhite ' 'dataset.bin ' ' A ' 'Ve' ''')']);
+% else
+%     status = eval(['unix ' '(''' './opsswhite ' 'dataset.bin ' ' A ' 'Ve' ''')']);
+% end%if
+status = unix(opsswhite_com);
+
 % clean job one
 delete channel
 delete trail
