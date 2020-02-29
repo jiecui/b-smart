@@ -17,12 +17,14 @@ function co_view(coh,chx,chy,fs,timen)
 %   co_view(paircoh,9,10,200);
 %   co_view(paircoh,9,10,200,[1,30]);
 
-% Copyright (c) 2006-2007 BSMART group.
+% Copyright (c) 2006-2020 BSMART group.
 % by Richard Cui
-% $Revision: 0.3$ $Date: 13-Sep-2007 10:08:16$
-% SHIS UT-Houston, Houston, TX 77030, USA.
+% $Revision: 0.4$ $Date: 13-Sep-2007 10:08:16$
 %
-% Lei Xu, Hualou Liang
+% 1026 Rocky Creek Dr NE
+% Rochester, MN 55906, USA
+%
+% Email: richard.cui@utoronto.ca
 
 % parameter settings
 [nw,nb,c] = size(coh);  % nw = number of windows, nb = No. frequency bins, c = coh pairs #
@@ -94,7 +96,8 @@ for k = winc
     xlabel('Frequency (Hz)')
     ylabel('Coherence')
     if ~isempty(timen)
-        title(sprintf('Window centered at %d ms',timen(k,2)));
+        title(sprintf('Window %d centered at %d ms',timen(k,1),...
+            timen(k, 2)));
     end%if
 end%for
 
