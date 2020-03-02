@@ -58,7 +58,7 @@ title('AIC Test')
 
 % estimate the model
 % ------------------
-model_ord = 3;
+[~, model_ord] = min(AIC); % AIC criterion
 startp = 1;
 [A, Ve] = one_mul_model(dat_pre, model_ord, startp, sig_len);
 
@@ -98,10 +98,10 @@ chx = 1;
 chy = 2;
 chz = 3;
 % chx <--> chy
-[freq, s_xy] = ga_view(Fx2y, Fy2x, fs, chx, chy);
-[~, s_yx] = ga_view(Fx2y, Fy2x, fs, chy, chx);
+s_xy = Fx2y(1, :);
+s_yx = Fy2x(1, :);
 figure
-plot(freq, s_xy, freq, s_yx, 'LineWidth', 2)
+plot(fre_int, s_xy, fre_int, s_yx, 'LineWidth', 2)
 ylim([0, 4])
 legend('x \rightarrow y', 'y \rightarrow x')
 title('Granger causality between channel x and channel y')
@@ -109,10 +109,10 @@ xlabel('Frequency (Hz)')
 ylabel('Granger causality')
 
 % chx <--> chz
-[freq, s_xz] = ga_view(Fx2y, Fy2x, fs, chx, chz);
-[~, s_zx] = ga_view(Fx2y, Fy2x, fs, chz, chx);
+s_xz = Fx2y(2, :);
+s_zx = Fy2x(2, :);
 figure
-plot(freq, s_xz, freq, s_zx, 'LineWidth', 2)
+plot(fre_int, s_xz, fre_int, s_zx, 'LineWidth', 2)
 ylim([0, 4])
 legend('x \rightarrow z', 'z \rightarrow x')
 title('Granger causality between channel x and channel z')
@@ -120,10 +120,10 @@ xlabel('Frequency (Hz)')
 ylabel('Granger causality')
 
 % chy <--> chz
-[freq, s_yz] = ga_view(Fx2y, Fy2x, fs, chy, chz);
-[~, s_zy] = ga_view(Fx2y, Fy2x, fs, chz, chy);
+s_yz = Fx2y(3, :);
+s_zy = Fy2x(3, :);
 figure
-plot(freq, s_yz, freq, s_zy, 'LineWidth', 2)
+plot(fre_int, s_yz, fre_int, s_zy, 'LineWidth', 2)
 ylim([0, 4])
 legend('y \rightarrow z', 'z \rightarrow y')
 title('Granger causality between channel y and channel z')
