@@ -1,6 +1,12 @@
-function ga_view(Fxy,Fyx,fs,chx,chy,timen)
+function varargout = ga_view(Fxy,Fyx,fs,chx,chy,timen)
 %  GA_VIEW View Granger causality
 %
+% Syntax:
+%   ga_view(Fxy, Fyx, fs, chx, chy)
+%   ga_view(__, timen)
+%   [time, freq, gc_spectrogram] = ga_view(__)
+%   [time, gc_spectrum] = ga_view(__)
+% 
 % Input(s):
 %   Fxy, Fyx    - granger causality data set
 %   fs          - sampling rate
@@ -8,18 +14,24 @@ function ga_view(Fxy,Fyx,fs,chx,chy,timen)
 %   chy         - another channnel
 %   timen       - (optional): view coherence at one time
 %
+% Note:
+%   If no output, ga_view shows the figures. Otherwise, send out the
+%   parameters of GC spectrogram and GC spectrum.
+% 
 %  Example:
 %   ga_view(Fxy,Fyx,200,9,10);
 %   ga_view(Fxy,Fyx,200,10,9,5);
 %
 % See also: one_bi_ga, mov_bi_ga.
 
-% Copyright (c) 2006-2007 BSMART group.
+% Copyright (c) 2006-2020 BSMART group.
 % by Richard Cui
-% $Revision: 0.4$ $Date: 18-Sep-2007 15:12:57$
-% SHIS UT-Houston, Houston, TX 77030, USA.
+% $Revision: 0.5$ $Date: Sun 03/01/2020  7:22:01.509 PM$
 %
-% Lei Xu, Hualou Liang
+% 1026 Rocky Creek Dr NE
+% Rochester, MN 55906, USA
+%
+% Email: richard.cui@utoronto.ca
 
 if nargin < 6
     % timen=0;
@@ -57,27 +69,46 @@ if nargin < 6
             c = squeeze(c);
             time = [1,si(3)];
             freq = [0,fs/2];
-            figure;
-            imagesc(time,freq,c);
-            axis xy;
-            colorbar;
-            tstr = sprintf('Granger Causality: Channel %d \\rightarrow Channel %d',chx,chy);
-            title(tstr);
-            xlabel('Time')
-            ylabel('Frequency (Hz)');
+            if nargout == 0
+                figure;
+                imagesc(time,freq,c);
+                axis xy;
+                colorbar;
+                tstr = sprintf('Granger Causality: Channel %d \\rightarrow Channel %d',chx,chy);
+                title(tstr);
+                xlabel('Time')
+                ylabel('Frequency (Hz)');
+            end % if
+            if nargout > 0
+                varargout{1} = time;
+            end % if
+            if nargout > 1
+                varargout{2} = freq;
+            end % if
+            if nargout > 2
+                varargout{3} = c;
+            end % if
         else % draw GC spectrum
             c = dat(k,:);
             c = c';
             nb = si(2); % number of frequency bin
             frq = linspace(0,fs/2,nb);
-            figure;
-            plot(frq,c);
-            % axis([0,si(2),0,1]);
-            h = gca;
-            tstr = sprintf('Channel %d \\rightarrow Channel %d',chx,chy);
-            title(h,tstr);
-            xlabel(h,'Frequency (Hz)')
-            ylabel(h,'Granger Causality')
+            if nargout == 0
+                figure;
+                plot(frq,c);
+                % axis([0,si(2),0,1]);
+                h = gca;
+                tstr = sprintf('Channel %d \\rightarrow Channel %d',chx,chy);
+                title(h,tstr);
+                xlabel(h,'Frequency (Hz)')
+                ylabel(h,'Granger Causality')
+            end % if
+            if nargout > 0
+                varargout{1} = frq;
+            end % if
+            if nargout > 1
+                varargout{2} = c;
+            end % if
         end
     else
         t=j;
@@ -96,27 +127,46 @@ if nargin < 6
             c=squeeze(c);
             time = [1,si(3)];
             freq = [0,fs/2];
-            figure;
-            imagesc(time,freq,c);
-            axis xy;
-            colorbar;
-            tstr = sprintf('Granger Causality: Channel %d \\rightarrow Channel %d',chx,chy);
-            title(tstr);
-            xlabel('Time')
-            ylabel('Frequency (Hz)');
+            if nargout == 0
+                figure;
+                imagesc(time,freq,c);
+                axis xy;
+                colorbar;
+                tstr = sprintf('Granger Causality: Channel %d \\rightarrow Channel %d',chx,chy);
+                title(tstr);
+                xlabel('Time')
+                ylabel('Frequency (Hz)');
+            end % if
+            if nargout > 0
+                varargout{1} = time;
+            end % if
+            if nargout > 1
+                varargout{2} = freq;
+            end % if
+            if nargout > 2
+                varargout{3} = c;
+            end % if
         else
             c=dat2(k,:);
             c=c';
             nb = si(2); % number of frequency bin
             frq = linspace(0,fs/2,nb);
-            figure;
-            plot(frq,c);
-            % axis([0,si(2),0,1]);
-            h = gca;
-            tstr = sprintf('Granger causality: Channel %d \\rightarrow Channel %d',chx,chy);
-            title(tstr);
-            xlabel(h,'Frequency (Hz)')
-            ylabel(h,'Granger Causality')
+            if nargout == 0
+                figure;
+                plot(frq,c);
+                % axis([0,si(2),0,1]);
+                h = gca;
+                tstr = sprintf('Granger causality: Channel %d \\rightarrow Channel %d',chx,chy);
+                title(tstr);
+                xlabel(h,'Frequency (Hz)')
+                ylabel(h,'Granger Causality')
+            end % if
+            if nargout > 0
+                varargout{1} = frq;
+            end % if
+            if nargout > 1
+                varargout{2} = c;
+            end % if
         end
     end
 else
@@ -159,14 +209,22 @@ else
         % figure('Name','Granger Causality','NumberTitle','off')
         nb = si(2); % number of frequency bin
         frq = linspace(0,fs/2,nb);
-        figure;
-        plot(frq,c);
-        % axis([0,si(2),0,1]);
-        h = gca;
-        tstr = sprintf('Channel %d \\rightarrow Channel %d',chx,chy);
-        title(tstr);
-        xlabel(h,'Frequency (Hz)')
-        ylabel(h,'Granger Causality')
+        if nargout == 0
+            figure;
+            plot(frq,c);
+            % axis([0,si(2),0,1]);
+            h = gca;
+            tstr = sprintf('Channel %d \\rightarrow Channel %d',chx,chy);
+            title(tstr);
+            xlabel(h,'Frequency (Hz)')
+            ylabel(h,'Granger Causality')
+        end % if
+        if nargout > 0
+            varargout{1} = frq;
+        end % if
+        if nargout > 1
+            varargout{2} = c;
+        end % if
     else
         t=j;
         j=i;
@@ -190,14 +248,22 @@ else
         end
         nb = si(2); % number of frequency bin
         frq = linspace(0,fs/2,nb);
-        figure;
-        plot(frq,c);
-        % axis([0,si(2),0,1]);
-        h = gca;
-        tstr = sprintf('Channel %d \\rightarrow Channel %d',chx,chy);
-        title(tstr);
-        xlabel(h,'Frequency (Hz)')
-        ylabel(h,'Granger Causality')
+        if nargout == 0 
+            figure;
+            plot(frq,c);
+            % axis([0,si(2),0,1]);
+            h = gca;
+            tstr = sprintf('Channel %d \\rightarrow Channel %d',chx,chy);
+            title(tstr);
+            xlabel(h,'Frequency (Hz)')
+            ylabel(h,'Granger Causality')
+        end % if
+        if nargout > 1
+            varargout{1} = frq;
+        end % if
+        if nargout > 2
+            varargout{2} = c;
+        end % if
     end
 end
 
