@@ -24,12 +24,14 @@ function [Fx2y,Fy2x]= one_bi_ga(dat,startp,window,order,fs,freq)
 % 
 % See also: mov_bi_ga.
 
-% Copyright (c) 2006-2007 BSMART group.
+% Copyright (c) 2006-2020 BSMART group.
 % by Richard Cui
-% $Revision: 0.2$ $Date: 12-Sep-2007 15:53:00$
-% SHIS UT-Houston, Houston, TX 77030, USA.
-% 
-% Lei Xu, Hualou Liang
+% $Revision: 0.3$ $Date: Sun 03/01/2020  7:22:01.509 PM$
+%
+% 1026 Rocky Creek Dr NE
+% Rochester, MN 55906, USA
+%
+% Email: richard.cui@utoronto.ca
 
 trail    = size(dat,3);
 channel2 = size(dat,2);
@@ -45,7 +47,7 @@ for i = 1:(channel2-1)
             a(1,(k-1)*points+1:k*points) = dat(:,i,k);
             a(2,(k-1)*points+1:k*points) = dat(:,j,k);
         end
-        [pp,cohe,Fx2y,Fy2x] = pwcausal(a,trail,points,order,fs,freq);
+        [~, ~, Fx2y, Fy2x] = pwcausal(a,trail,points,order,fs,freq);
         Fxy = cat(1,Fxy,Fx2y);
         Fyx = cat(1,Fyx,Fy2x);
     end
