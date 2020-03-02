@@ -12,6 +12,14 @@
 % 
 % See also .
 
+% Copyright 2020 Richard J. Cui. Created: Sun 03/01/2020  7:22:01.509 PM
+% $Revision: 0,1 $  $Date: Sun 03/01/2020  7:22:01.509 PM $
+%
+% 1026 Rocky Creek Dr NE
+% Rochester, MN 55906, USA
+%
+% Email: richard.cui@utoronto.ca
+
 % =========================================================================
 % main
 % =========================================================================
@@ -78,13 +86,57 @@ title('Paired Coherence')
 xlabel('Frequency (Hz)')
 ylabel('Coherence')
 
+%% calculate pairwise Granger causality
+% estimate the GC
+% ---------------
+fre_int = 0:fs/2; % frequencies of interest
+[Fx2y, Fy2x] = one_bi_ga(dat_pre, startp, sig_len, model_ord, fs, fre_int);
+
+% plot GC bwtween specified channel pair
+% ---------------------------------------
+chx = 1;
+chy = 2;
+chz = 3;
+% chx <--> chy
+[freq, s_xy] = ga_view(Fx2y, Fy2x, fs, chx, chy);
+[~, s_yx] = ga_view(Fx2y, Fy2x, fs, chy, chx);
+figure
+plot(freq, s_xy, freq, s_yx, 'LineWidth', 2)
+ylim([0, 4])
+legend('x \rightarrow y', 'y \rightarrow x')
+title('Granger causality between channel x and channel y')
+xlabel('Frequency (Hz)')
+ylabel('Granger causality')
+
+% chx <--> chz
+[freq, s_xz] = ga_view(Fx2y, Fy2x, fs, chx, chz);
+[~, s_zx] = ga_view(Fx2y, Fy2x, fs, chz, chx);
+figure
+plot(freq, s_xz, freq, s_zx, 'LineWidth', 2)
+ylim([0, 4])
+legend('x \rightarrow z', 'z \rightarrow x')
+title('Granger causality between channel x and channel z')
+xlabel('Frequency (Hz)')
+ylabel('Granger causality')
+
+% chy <--> chz
+[freq, s_yz] = ga_view(Fx2y, Fy2x, fs, chy, chz);
+[~, s_zy] = ga_view(Fx2y, Fy2x, fs, chz, chy);
+figure
+plot(freq, s_yz, freq, s_zy, 'LineWidth', 2)
+ylim([0, 4])
+legend('y \rightarrow z', 'z \rightarrow y')
+title('Granger causality between channel y and channel z')
+xlabel('Frequency (Hz)')
+ylabel('Granger causality')
+
 %% ========================================================================
 % subroutine
 % =========================================================================
 function [x, y, z] = constructModel(sig_len, lambda, sigma_x, sigma_y, sigma_z)
 % sig_len           - signal length
 % lambda            - parameter |lambda| < 1
-%  sigma_x,y,z      - noise STD for x, y, z channels
+% sigma_x,y,z      - noise STD for x, y, z channels
 
 % parameters
 % ----------
