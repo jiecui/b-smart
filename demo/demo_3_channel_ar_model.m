@@ -4,16 +4,22 @@
 %   test_3_channel_ar_model
 % 
 % Reference:
-%       Ding, M. Z., Bressler, S. L., Yang, W. M., & Liang, H. L. (2000).
-%   Short-window spectral analysis of cortical event-related potentials by
-%   adaptive multivariate autoregressive modeling: data preprocessing,
-%   model validation, and variability assessment. Biological Cybernetics,
-%   83(1), 35-45.
+%   [DING2000] Ding, M. Z., Bressler, S. L., Yang, W. M., & Liang, H. L.
+%           (2000). Short-window spectral analysis of cortical
+%           event-related potentials by adaptive multivariate
+%           autoregressive modeling: data preprocessing, model validation,
+%           and variability assessment. Biological Cybernetics, 83(1),
+%           35-45.
+%   [DING2006] Ding, M., Chen, Y. H., & Bressler, S. L. (2006). Granger 
+%           causality: basic theory and application to neuroscience. In B.
+%           Schelter, M. Winterhalder, & J. Timmer (Eds.), Handbook of time
+%           series analysis: Recent theoretical developments and
+%           applications (pp. 437-459). Berlin: Wiley-VCH.
 % 
-% See also .
+% See also demo_test71.mlx.
 
 % Copyright 2020 Richard J. Cui. Created: Sun 03/01/2020  7:22:01.509 PM
-% $Revision: 0,1 $  $Date: Sun 03/01/2020  7:22:01.509 PM $
+% $Revision: 0,2 $  $Date: Mon 03/02/2020 10:23:18.942 PM $
 %
 % 1026 Rocky Creek Dr NE
 % Rochester, MN 55906, USA
@@ -63,12 +69,14 @@ startp = 1;
 [A, Ve] = one_mul_model(dat_pre, model_ord, startp, sig_len);
 
 %% calculate pairwise coherence
-% theoretical coherence
+% theoretical coherence (not a funciton of frequency)
+% ---------------------------------------------------
 c_xy = sigma_x^2/(sigma_x^2+sigma_y^2);
 c_xz = sigma_x/(sigma_x^2+sigma_z^2);
 c_yz = sigma_x^4/(sigma_x^2+sigma_y^2)/(sigma_x^2+sigma_z^2);
 
 % estimate the coherence
+% ----------------------
 fs = 200; % sampling frequency (Hz)
 nfb = 100; % number of frequency bins
 fx = linspace(0, nfb, nfb);
@@ -76,6 +84,7 @@ coh = paircoherence(A, Ve, nfb, fs);
 C = squeeze(coh); % just one window
 
 % plot the result
+% ---------------
 figure
 plot(fx, C, 'LineWidth', 2)
 hold on
@@ -87,10 +96,19 @@ xlabel('Frequency (Hz)')
 ylabel('Coherence')
 
 %% calculate pairwise Granger causality
+% theoretical pairwise GC
+% -----------------------
+% this model can use [DING2006] equation (17.17)
+g_xy = -log(1-c_xy);
+g_xz = -log(1-c_xz);
+
 % estimate the GC
 % ---------------
 fre_int = 0:fs/2; % frequencies of interest
-[Fx2y, Fy2x] = one_bi_ga(dat_pre, startp, sig_len, model_ord, fs, fre_int);
+[Fx2y, Fy2x, Tx2y, Ty2x] = one_bi_ga(dat_pre, startp, sig_len, model_ord,...
+    fs, fre_int);
+hat_g_xy = Tx2y(1);
+hat_g_xz = Tx2y(2);
 
 % plot GC bwtween specified channel pair
 % ---------------------------------------
@@ -103,6 +121,8 @@ s_yx = Fy2x(1, :);
 figure
 plot(fre_int, s_xy, fre_int, s_yx, 'LineWidth', 2)
 ylim([0, 4])
+hold on
+plot(xlim, ones(2, 1)*[g_xy, hat_g_xy], '--', 'LineWidth', 1)
 legend('x \rightarrow y', 'y \rightarrow x')
 title('Granger causality between channel x and channel y')
 xlabel('Frequency (Hz)')
@@ -114,6 +134,8 @@ s_zx = Fy2x(2, :);
 figure
 plot(fre_int, s_xz, fre_int, s_zx, 'LineWidth', 2)
 ylim([0, 4])
+hold on
+plot(xlim, ones(2, 1)*[g_xz, hat_g_xz], '--', 'LineWidth', 1)
 legend('x \rightarrow z', 'z \rightarrow x')
 title('Granger causality between channel x and channel z')
 xlabel('Frequency (Hz)')
@@ -134,9 +156,13 @@ ylabel('Granger causality')
 % subroutine
 % =========================================================================
 function [x, y, z] = constructModel(sig_len, lambda, sigma_x, sigma_y, sigma_z)
+% 
 % sig_len           - signal length
 % lambda            - parameter |lambda| < 1
-% sigma_x,y,z      - noise STD for x, y, z channels
+% sigma_x,y,z       - noise STD for x, y, z channels
+% 
+% Reference:
+%   [DING2000] equation (10)
 
 % parameters
 % ----------
