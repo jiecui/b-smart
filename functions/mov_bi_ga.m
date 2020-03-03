@@ -1,8 +1,8 @@
-function [Fxy,Fyx] = mov_bi_ga(dat,startp,endp,win,order,fs,freq)
+function [Fxy,Fyx, Txy, Tyx] = mov_bi_ga(dat,startp,endp,win,order,fs,freq)
 % MOV_BI_GA Compute the granger causality from the moving window Bivariate models
 % 
 % Usage:
-%   [Fxy,Fyx] = mov_bi_ga(dat,startp,endp,window,order,fs,freq) 
+%   [Fxy,Fyx, Txy, Tyx] = mov_bi_ga(dat,startp,endp,window,order,fs,freq) 
 % 
 % Input(s):
 %   dat     - data set in Matlab format
@@ -14,11 +14,13 @@ function [Fxy,Fyx] = mov_bi_ga(dat,startp,endp,win,order,fs,freq)
 %   freq    - a vector of frequencies of interest, usually freq = 0:fs/2
 % 
 % Output(s):
-%   Fx2y    - the causality measure from x to y
-%   Fy2x    - causality from y to x
+%   Fxy     - the causality measure from x to y in frequency domain
+%   Fyx     - causality from y to x in frequency domain
 %             The order of Fx2y/Fy2x is 1 to 2:L, 2 to 3:L,....,L-1 to L, where
 %             L is the number of channels. That is, 1st column: 1&2; 2nd:
 %             1&3; ...; (L-1)th: 1&L; ...; (L(L-1))th:(L-1)&L.
+%   Txy     - the causality measure from x to y in time domain
+%   Tyx     - causality from y to x in time domain
 % 
 % Example:
 %   [Fxy,Fyx] = mov_bi_ga(data,1,18,10,5,200,[1:100])
@@ -27,10 +29,12 @@ function [Fxy,Fyx] = mov_bi_ga(dat,startp,endp,win,order,fs,freq)
 
 % Copyright (c) 2006-2007 BSMART group.
 % by Richard Cui
-% $Revision: 0.2$ $Date: 12-Sep-2007 15:53:00$
-% SHIS UT-Houston, Houston, TX 77030, USA.
-% 
-% Lei Xu, Hualou Liang
+% $Revision: 0.3$ $Date: Mon 03/02/2020 10:30:45.153 PM $
+%
+% 1026 Rocky Creek Dr NE
+% Rochester, MN 55906, USA
+%
+% Email: richard.cui@utoronto.ca
 
 trail   = size(dat,3);
 channel = size(dat,2);
@@ -67,10 +71,15 @@ for ii = 1:points-win+1
         end
     end
 end
-close(hw);
+delete(hw);
 
+% frequency domain
 Fxy = fxy;
 Fyx = fyx;
+
+% time domain
+Txy = squeeze(mean(Fxy, 2));
+Tyx = squeeze(mean(Fyx, 2));
 
 end%mov_bi_ga
 
