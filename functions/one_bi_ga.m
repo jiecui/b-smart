@@ -49,9 +49,9 @@ for i = 1:(channel2-1)
             a(1,(k-1)*points+1:k*points) = dat(:,i,k);
             a(2,(k-1)*points+1:k*points) = dat(:,j,k);
         end
-        [~, ~, Fx2y, Fy2x] = pwcausal(a,trail,points,order,fs,freq);
-        Fxy = cat(1,Fxy,Fx2y);
-        Fyx = cat(1,Fyx,Fy2x);
+        [~, ~, Fx2y_ij, Fy2x_ij] = pwcausal(a,trail,points,order,fs,freq);
+        Fxy = cat(1,Fxy,Fx2y_ij);
+        Fyx = cat(1,Fyx,Fy2x_ij);
     end
 end
 
