@@ -5,7 +5,7 @@ function varargout = ga_view(Fxy,Fyx,fs,chx,chy,timen)
 %   ga_view(Fxy, Fyx, fs, chx, chy)
 %   ga_view(__, timen)
 %   [time, freq, gc_spectrogram] = ga_view(__)
-%   [time, gc_spectrum] = ga_view(__)
+%   [freq, gc_spectrum] = ga_view(__)
 % 
 % Input(s):
 %   Fxy, Fyx    - granger causality data set
