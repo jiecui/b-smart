@@ -28,7 +28,7 @@ function [Fx2y,Fy2x, Tx2y, Ty2x]= one_bi_ga(dat,startp,window,order,fs,freq)
 
 % Copyright (c) 2006-2020 BSMART group.
 % by Richard Cui
-% $Revision: 0.4$ $Date: Mon 03/02/2020 10:30:45.153 PM$
+% $Revision: 0.5$ $Date: Wed 03/04/2020 10:10:24.227 AM$
 %
 % 1026 Rocky Creek Dr NE
 % Rochester, MN 55906, USA

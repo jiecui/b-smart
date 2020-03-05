@@ -1,22 +1,24 @@
 function [pp,cohe,Fx2y,Fy2x, Ix2y, Iy2x]=pwcausal(x,Nr,Nl,porder,fs,freq)
 % Using Geweke's method to compute the causality between any two channels
 %
-%   x is a matrix whose every row is one variable's time series
-%   Nr is the number of realizations,
-%   Nl is the length of every realization
+% Input(s):
+%   x               - a matrix whose every row is one variable's time series
+%   Nr              - the number of realizations,
+%   Nl              - the length of every realization
 %      If the time series are stationary long, just let Nr=1, Nl=length(x)
 %   porder is the order of AR model
-%   fs is sampling frequency
-%   freq is a vector of frequencies of interest, usually freq=0:fs/2
+%   fs              - sampling frequency
+%   freq            - a vector of frequencies of interest, usually freq=0:fs/2
 %
-%   pp is power spectrum
-%   cohe is coherence between any two channels
-%   Fx2y is the causality measure from x to y (frequency domain)
-%   Fy2x is causality from y to x
+% Output(s):
+%   pp              - power spectrum
+%   cohe            - coherence between any two channels
+%   Fx2y            - the causality measure from x to y (frequency domain)
+%   Fy2x            - causality from y to x
 %        the order of Fx2y/Fy2x is 1 to 2:L, 2 to 3:L,....,L-1 to L.  That is,
 %        1st column: 1&2; 2nd: 1&3; ...; (L-1)th: 1&L; ...; (L(L-1))th: (L-1)&L.
-%   Ix2y
-%   Iy2x 
+%   Ix2y            - 
+%   Iy2x            - 
 
 % Finished March 2003 by Yonghong Chen
 %
