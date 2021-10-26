@@ -5,7 +5,7 @@ function [Fx2y,Fy2x, Tx2y, Ty2x]= one_bi_ga(dat,startp,window,order,fs,freq)
 %   [Fx2y,Fy2x]= one_bi_ga(dat,startp,window,order,fs,freq) 
 % 
 % Input(s):
-%   dat     - data set in Matlab format
+%   dat     - data set in Matlab format samples x channels x trials
 %   starp   - start position
 %   window  - window length
 %   order   - model order
@@ -28,7 +28,7 @@ function [Fx2y,Fy2x, Tx2y, Ty2x]= one_bi_ga(dat,startp,window,order,fs,freq)
 
 % Copyright (c) 2006-2020 BSMART group.
 % by Richard Cui
-% $Revision: 0.5$ $Date: Wed 03/04/2020 10:10:24.227 AM$
+% $Revision: 0.6 $ $Date: Mon 06/08/2020  9:40:12.283 AM $
 %
 % 1026 Rocky Creek Dr NE
 % Rochester, MN 55906, USA
