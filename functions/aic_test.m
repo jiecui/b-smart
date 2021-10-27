@@ -55,6 +55,7 @@ if status ~= 0
     error('Cannot compute AIC with ''opssaic''!');
 end%if
 % otherwise
+% TODO: matlab version compatible
 AIC = load('AIC_now');
 % clean job two
 delete AIC_now
