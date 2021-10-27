@@ -1,8 +1,8 @@
-function coherence = paircoherence(aredat,arndat,n,fs)
+function [coherence,f] = paircoherence(aredat,arndat,n,fs)
 % PAIRCOHERENCE Compute the coherence pairs
 % 
 % Usage: 
-%  [coherence] = paircoherence(aredat,arndat,n,fs);
+%  [coherence,f] = paircoherence(aredat,arndat,n,fs);
 % 
 % Input(s):
 %  aredat: AR coefficient file
@@ -11,17 +11,26 @@ function coherence = paircoherence(aredat,arndat,n,fs)
 %  fs: Sampling rate
 % 
 % Output(s):
-%   coherence   -   Pairwised ordinary coherence in the format of 
-%                   [Time_points x Frequency_bins x Coherence]; the
-%                   sequence of coherence follows: (1,1),(1,2),...,(1,k),
-%                   (2,2),(2,3),...,(2,k),...,(k,k), where k is the number
-%                   of channels, amounting to 1/2*k(k-1) coherence
+%   coherence   -   Squared coherence; pairwised ordinary coherence in the 
+%                   format of [Time_points x Frequency_bins x Coherence];
+%                   the sequence of coherence follows: (1,1), (1,2), ...,
+%                   (1,k), (2,2),(2,3),...,(2,k),...,(k,k), where k is the
+%                   number of channels, amounting to 1/2*k(k-1) coherence
 %                   measures.
 % 
 % Example:
 % 
 % See also: .
 
+% Copyright 2007-2020 Richard J. Cui. Created: Sat 05/30/2020  1:04:30.492 AM
+% $Revision: 0.1 $  $Date: Sat 05/30/2020  1:04:30.492 AM $
+%
+% Multimodal Neuroimaging Lab (Dr. Dora Hermes)
+% Mayo Clinic St. Mary Campus
+% Rochester, MN 55905, USA
+%
+% Email: richard.cui@utoronto.ca (permanent), Cui.Jie@mayo.edu (official)
+% 
 % Copyright (c) 2006-2007 BSMART group.
 % by Richard Cui
 % $Revision: 0.2$ $Date: 12-Sep-2007 11:35:38$
@@ -30,8 +39,7 @@ function coherence = paircoherence(aredat,arndat,n,fs)
 % Lei Xu, Hualou Liang
 
 csd4d     = MAR_csd4dmem(aredat,arndat,n,fs);
-paircoh   = MAR_coh3D(csd4d,fs);
-coherence = paircoh;
+[coherence,~,~,~,f] = MAR_coh3D(csd4d,fs);
 
 end%function
 
