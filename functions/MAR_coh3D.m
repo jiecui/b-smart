@@ -1,5 +1,5 @@
 
-function [paircoh, partcoh, mulcoh, autospect] = ...
+function [paircoh, partcoh, mulcoh, autospect,fc] = ...
 	MAR_coh3D(csd4d, Fs);
 
 % The only difference with coh3D is without global variables and t, f 
@@ -25,9 +25,16 @@ function [paircoh, partcoh, mulcoh, autospect] = ...
 %   Trng:    time range(msec)
 %
 
+% Copyright 2020 Richard J. Cui. Created: Sat 05/30/2020  1:04:30.492 AM
+% $Revision: 0.1 $  $Date: Sat 05/30/2020  1:04:30.492 AM $
+%
+% Multimodal Neuroimaging Lab (Dr. Dora Hermes)
+% Mayo Clinic St. Mary Campus
+% Rochester, MN 55905, USA
+%
+% Email: richard.cui@utoronto.ca (permanent), Cui.Jie@mayo.edu (official)
 %  
 %  Hualou Liang, 01/07/99, FAU
-% 
 
 
 
@@ -54,7 +61,7 @@ for tt=1:TT,
 
   for i=1:chans,
 	for j=i+1:chans,
-	  [coh1, f] = pair_coh(csd,i,j,Fs);  % TODO: need new func to remove f
+	  [coh1, fc] = pair_coh(csd,i,j,Fs);  % TODO: need new func to remove f
 	  [coh2, f] = part_coh(csd,i,j,Fs);  % TODO: need new func to remove f
 	  cohtmp1 = [cohtmp1 coh1];
 	  cohtmp2 = [cohtmp2 coh2'];
